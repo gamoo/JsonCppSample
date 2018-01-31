@@ -1,0 +1,3 @@
+﻿  CWndSampleDlg.cpp
+d:\dev\mfc\jsoncppsample\cwndsample\cwndsampledlg.cpp(267): warning C4018: '<' : signed 또는 unsigned가 일치하지 않습니다.
+  CWndSample.vcxproj -> D:\dev\MFC\JsonCppSample\Debug\CWndSample.exe
