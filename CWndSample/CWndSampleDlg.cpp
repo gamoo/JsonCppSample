@@ -67,6 +67,7 @@ BEGIN_MESSAGE_MAP(CCWndSampleDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CCWndSampleDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CCWndSampleDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -275,4 +276,48 @@ void CCWndSampleDlg::OnBnClickedButton1()
 	fclose(pCout);
 	::FreeConsole();
 
+}
+
+
+void CCWndSampleDlg::OnBnClickedButton2()
+{
+	Json::Value root;
+	Json::Value action;
+
+	action["state"] = "SP_2WAY_TRANSFER_COMPLETE";
+
+	Json::Value params;
+	Json::Value items;
+	Json::Value items1;
+	Json::Value items2;
+
+	items1["item_name"] = "contacts";
+	items1["item_state"] = "success";
+	items1["read_count"] = 10;
+	items1["write_count"] = 10;
+	
+	items2["item_name"] = "sms";
+	items2["item_state"] = "success";
+	items2["read_count"] = 10;
+	items2["write_count"] = 10;
+
+	items.append(items1);
+	items.append(items2);
+
+	params["items"] = items;
+	
+	action["params"] = params;
+	root["uiAction"] = action;
+
+	Json::StreamWriterBuilder builder;
+
+	std::string outputString = Json::writeString(builder, root);
+
+	::OutputDebugStringA(outputString.c_str());
+
+	std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
+
+	writer->write(root, &std::cout);
+
+	std::cout << std::endl;
 }
